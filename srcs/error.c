@@ -1,21 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   time.h                                             :+:    :+:            */
+/*   error.c                                            :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dvan-kri <dvan-kri@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/04/12 14:08:41 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/14 15:46:01 by dvan-kri      ########   odam.nl         */
+/*   Created: 2022/04/14 13:56:39 by dvan-kri      #+#    #+#                 */
+/*   Updated: 2022/04/14 13:56:49 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef TIME_H
-# define TIME_H
+#include <stdio.h>
 
-void	usleep_more_accurate(size_t time);
-void	set_start_time(t_data *data);
-size_t	time_stamp(void);
-size_t	time_passed(size_t start);
-
-#endif
+int	usage_error(void)
+{
+	printf("Invalid number of arguments");
+	return (1);
+}

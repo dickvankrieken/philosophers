@@ -6,20 +6,27 @@
 /*   By: dvan-kri <dvan-kri@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/12 13:49:32 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/12 18:02:29 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/14 16:02:52 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/time.h>
+#include <unistd.h>
 #include "../incl/philosopher.h"
 #include "../incl/time.h"
 
-size_t	safe_sleep(size_t time)
+void	usleep_more_accurate(size_t time)
 {
-/* 
-usleep(5) totdat time bereikt is
-maar hoe houden we bij wat de gepasseerde tijd is?
-*/
+	size_t 			time_passed;
+	size_t			time_start;
+
+	time_start = time_stamp();
+	time_passed = 0;
+	while (time_passed < time)
+	{
+		usleep(5);
+		time_passed = time_stamp() - time_start;
+	}
 }
 
 void	set_start_time(t_data *data)

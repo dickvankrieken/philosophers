@@ -1,6 +1,6 @@
 NAME = philo
 
-SRCS = main.c time.c utils.c threads.c time.c act.c
+SRCS = main.c time.c utils.c threads.c time.c act.c error.c
 
 SRC_FILES = $(addprefix $(SRCDIR)/,$(SRCS))
 
