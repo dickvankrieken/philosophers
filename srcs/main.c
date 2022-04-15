@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/12 12:54:27 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/14 14:55:44 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/15 16:57:45 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,23 +28,16 @@ void	init_data(int argc, char *argv[], t_data *data)
 		data->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
 }
 
-int	malloc_philosophers(t_philosopher **philosophers, int number_of_philosophers)
-{
-	/*
-	 malloc de mutex - vorken
-	 malloc de t_philosopher structs
-	 malloc de data
-	 */
-	*philosophers = malloc(sizeof(t_philosopher) * number_of_philosophers);
-	if (!philosophers)
-		return (-1);
-	return (0);
-}
-
-int	malloc_data(t_data **data)
+int	malloc_resources(t_data **data, t_philosopher **philosophers, int number_of_philosophers)
 {
 	*data = malloc(sizeof(t_data));
 	if (!data)
+		return (-1);
+	*philosophers = malloc(sizeof(t_philosopher) * number_of_philosophers);
+	if (!philosophers)
+		return (-1);
+	(*data)->forks = malloc(sizeof(pthread_mutex_t) * number_of_philosophers);
+	if (!((*data)->forks))
 		return (-1);
 	return (0);
 }
@@ -58,10 +51,27 @@ void	init_philosophers(t_data *data, t_philosopher *philosophers)
 	{
 		philosophers[i].data = data;
 		philosophers[i].id = i + 1;
+		if (i = 0)
+			philosophers[i].right_fork = data->forks[data->number_of_philosophers - 1];
+		else
+			philosophers[i].right_fork = data->forks[i - 1];
+		philosophers[i].left_fork = data->forks[i];
 		i++;
 	}
-//	printf("de start_time is %zu", philosophers[0].data->start_time);
 }
+
+void	pthread_join_all_threads(t_philosopher *philosophers)
+{
+	int	i;
+
+	i = 0;
+	while (i < philosophers[0].data->number_of_philosophers)
+	{
+		pthread_join(philosophers[i].thread, NULL);
+		i++;
+	}
+}
+
 
 int main(int argc, char *argv[])
 {
@@ -72,15 +82,13 @@ int main(int argc, char *argv[])
 	data = NULL;
 	if (argc != 5 && argc != 6)
 		return (usage_error());
-	if (malloc_data(&data))
+	if (malloc_resources(&data, &philosophers, ft_atoi(argv[1])))
 		return (-1);
 	init_data(argc, argv, data);
-	if (malloc_philosophers(&philosophers, data->number_of_philosophers))
-		return (-1);
 	init_philosophers(data, philosophers);
 	set_start_time(data);
 	start_threads(philosophers);
-	pthread_join(philosophers[0].thread, NULL);
+	pthread_join_all_threads(philosophers);
 }
 
 /*
