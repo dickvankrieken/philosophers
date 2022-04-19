@@ -2,5 +2,6 @@
 # define ERROR_H
 
 int	usage_error(void);
+int	error_handler(t_data data);
 
 #endif
