@@ -3,16 +3,16 @@
 /*                                                        ::::::::            */
 /*   time.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dvan-kri <dvan-kri@student.42.fr>            +#+                     */
+/*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/04/12 13:49:32 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/19 17:43:14 by dvan-kri      ########   odam.nl         */
+/*   Created: 2022/04/21 15:10:27 by dvan-kri      #+#    #+#                 */
+/*   Updated: 2022/04/21 15:10:28 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <sys/time.h>
 #include <unistd.h>
-#include "../incl/philosopher.h"
+#include "../incl/philosophers.h"
 #include "../incl/time.h"
 
 void	usleep_more_accurate(size_t time)

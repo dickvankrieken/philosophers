@@ -3,32 +3,24 @@
 /*                                                        ::::::::            */
 /*   main.c                                             :+:    :+:            */
 /*                                                     +:+                    */
-/*   By: dvan-kri <dvan-kri@student.42.fr>            +#+                     */
+/*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
-/*   Created: 2022/04/12 12:54:27 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/19 18:59:23 by dvan-kri      ########   odam.nl         */
+/*   Created: 2022/04/21 15:11:09 by dvan-kri      #+#    #+#                 */
+/*   Updated: 2022/04/21 15:45:23 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "../incl/philosopher.h"
+#include "../incl/philosophers.h"
 #include "../incl/utils.h"
 #include "../incl/time.h"
 #include "../incl/threads.h"
 #include "../incl/error.h"
+#include "../incl/init.h"
 #include "../incl/act.h" //temp
 #include <unistd.h> //temp
 
-void	init_data(int argc, char *argv[], t_data *data)
-{
-	data->number_of_philosophers = ft_atoi(argv[1]);
-	data->time_to_die = ft_atoi(argv[2]);
-	data->time_to_eat = ft_atoi(argv[3]);
-	data->time_to_sleep = ft_atoi(argv[4]);
-	if (argc == 6)
-		data->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
-}
 
 int	malloc_resources(t_data *data, int number_of_philosophers)
 {
@@ -41,35 +33,29 @@ int	malloc_resources(t_data *data, int number_of_philosophers)
 	return (0);
 }
 
-void	init_philosophers(t_data *data, t_philosopher *philosopher, int number_of_philosophers)
+void	death_checker(t_data *data)
 {
-	int	i;
-
-	i = 0;
-	while (i < number_of_philosophers)
-	{
-		philosopher[i].data = data;
-		philosopher[i].id = i + 1;
-		if (i == 0)
-			philosopher[i].right_fork = &data->forks[data->number_of_philosophers - 1];
-		else
-			philosopher[i].right_fork = &data->forks[i - 1];
-		philosopher[i].left_fork = &data->forks[i];
-		i++;
-	}
-}
-
-void	init_forks(t_data *data)
-{
+	/* als de time_to_die kleiner is dan de tijd die verstreken is sinds de last_eaten van een Ph, dan moet er een berichtje komen en moet de simulatie stoppen . . .
+	 */
 	int	i;
 
 	i = 0;
 	while (i < data->number_of_philosophers)
 	{
-		pthread_mutex_init(&data->forks[i], NULL);
+		if (data->time_to_die < time_passed(data->philosophers[i].last_eaten))
+		{
+			/* doe iets wat er voor zorgt dat de hele simulatie stopt
+			maar wat dan? en hoe dan? */
+			printf("time passed == %zu\n", time_passed(data->philosophers[i].last_eaten));
+			data->philosopher_dead = TRUE;
+			return ;
+		}
 		i++;
 	}
+	usleep(5);
+	death_checker(data);
 }
+
 
 int main(int argc, char *argv[])
 {
@@ -81,12 +67,13 @@ int main(int argc, char *argv[])
 		return (error_handler(data));
 	init_data(argc, argv, &data);
 	init_forks(&data);
-
-	init_philosophers(&data, data.philosophers, data.number_of_philosophers);
 	set_start_time(&data);
+	init_philosophers(&data, data.philosophers, data.number_of_philosophers);
 
-	start_threads(data);
-	pthread_join_all_threads(data);
+	start_threads(&data);
+	death_checker(&data);
+	printf("someone died\n");
+	pthread_join_all_threads(&data);
 }
 
 /*

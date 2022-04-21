@@ -1,6 +1,6 @@
 NAME = philo
 
-SRCS = main.c time.c utils.c threads.c time.c act.c error.c
+SRCS = main.c time.c utils.c threads.c time.c act.c error.c init.c
 
 SRC_FILES = $(addprefix $(SRCDIR)/,$(SRCS))
 
@@ -15,7 +15,7 @@ CFLAGS = -Wall -Werror -Wextra
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -g -fsanitize=address -o $@ $^
+	$(CC) $(CFLAGS) -g -fsanitize=thread -o $@ $^
 
 $(OBJS): | $(OBJDIR)
 
@@ -23,7 +23,7 @@ $(OBJDIR):
 	mkdir $(OBJDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) -c -g -fsanitize=address $^ -o $@
+	$(CC) $(CFLAGS) -c -g $^ -o $@
 
 clean:
 	rm -f $(NAME)
