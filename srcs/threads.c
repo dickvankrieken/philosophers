@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:15 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/21 15:18:04 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/22 14:16:40 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void    *ft_philosopher(void *philosopher)
 		ph_take_forks(philo_pointer);
 		ph_eat(philo_pointer);
 		ph_sleep(philo_pointer);
-		ph_think(philo_pointer);
 	}
 	return (NULL);
 }

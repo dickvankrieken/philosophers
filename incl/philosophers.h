@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:26 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/21 15:19:11 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/22 12:24:40 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ typedef struct s_philosopher
 typedef struct s_data
 {
 	pthread_mutex_t	*forks;
+	pthread_mutex_t print_mutex;
 	t_philosopher	*philosophers;
 	t_bool			philosopher_dead;
 	size_t			start_time;
