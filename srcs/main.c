@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:11:09 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/22 15:08:40 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/25 17:57:06 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,16 @@
 #include "../incl/act.h" //temp
 #include <unistd.h> //temp
 
-int	malloc_resources(t_data *data, int number_of_philosophers)
-{
-	data->philosophers = malloc(sizeof(t_philosopher) * number_of_philosophers);
-	if (!data->philosophers)
-		return (-1);
-	data->forks = malloc(sizeof(pthread_mutex_t) * number_of_philosophers);
-	if (!data->forks)
-		return (-1);
-	return (0);
-}
+/* int	malloc_resources(t_data *data, int number_of_philosophers) */
+/* { */
+/* 	data->philosophers = malloc(sizeof(t_philosopher) * number_of_philosophers); */
+/* 	if (!data->philosophers) */
+/* 		return (-1); */
+/* 	data->forks = malloc(sizeof(pthread_mutex_t) * number_of_philosophers); */
+/* 	if (!data->forks) */
+/* 		return (-1); */
+/* 	return (0); */
+/* } */
 
 void	death_checker(t_data *data)
 {
@@ -58,11 +58,13 @@ void	death_checker(t_data *data)
 int main(int argc, char *argv[])
 {
 	t_data			data;
+	t_philosophers		philosophers[MAX_PHILOS];
+	p_thread_mutex_t	forks[MAX_PHILOS];
 
 	if (argc != 5 && argc != 6)
 		return (usage_error());
-	if (malloc_resources(&data, ft_atoi(argv[1])) == -1)
-		return (error_handler(&data));
+	/* if (malloc_resources(&data, ft_atoi(argv[1])) == -1) */
+	/* 	return (error_handler(&data)); */
 	init_data(argc, argv, &data);
 	if (init_mutexes(&data))
 		return (error_handler(&data));

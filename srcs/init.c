@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:06 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/22 12:24:19 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/25 17:58:43 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	init_philosophers(t_data *data, t_philosopher *philosopher, int number_of_p
 	}
 }
 
-int		init_mutexes(t_data *data)
+t_err	init_mutexes(t_data *data)
 {
 	int	i;
 
@@ -51,10 +51,10 @@ int		init_mutexes(t_data *data)
 	while (i < data->number_of_philosophers)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) == -1)
-			return (1);
+			return (MUTEX_FAIL);
 		i++;
 	}
 	if (pthread_mutex_init(&data->print_mutex, NULL) == -1)
-		return (1);
+		return (MUTEX_FAIL);
 	return (0);
 }

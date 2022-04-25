@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:26 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/22 12:24:40 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/25 18:02:17 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,13 @@
 # define PHILOSOPHERS_H
 
 # include <pthread.h>
+
+typedef enum t_err
+{
+	SUCCESS,
+	MUTEX_FAIL,
+	PTHREAD_CREATE_FAIL
+}
 
 typedef enum e_bool
 {
@@ -33,7 +40,7 @@ typedef struct s_philosopher
 
 typedef struct s_data
 {
-	pthread_mutex_t	*forks;
+	/* pthread_mutex_t	*forks; */
 	pthread_mutex_t print_mutex;
 	t_philosopher	*philosophers;
 	t_bool			philosopher_dead;
