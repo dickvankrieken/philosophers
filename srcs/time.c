@@ -6,10 +6,11 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:27 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/21 15:10:28 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/28 18:02:31 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h> // temp
 #include <sys/time.h>
 #include <unistd.h>
 #include "../incl/philosophers.h"
@@ -24,7 +25,7 @@ void	usleep_more_accurate(size_t time)
 	time_passed = 0;
 	while (time_passed < time)
 	{
-		usleep(5);
+		usleep(100);
 		time_passed = time_stamp() - time_start;
 	}
 }
@@ -46,5 +47,6 @@ size_t	time_stamp(void)
 
 size_t	time_passed(size_t start)
 {
+	// printf(">>>%zu<<<", (time_stamp() - start));
 	return (time_stamp() - start);
 }

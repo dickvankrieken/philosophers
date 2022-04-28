@@ -15,7 +15,7 @@ CFLAGS = -Wall -Werror -Wextra
 all: $(NAME)
 
 $(NAME): $(OBJS)
-	$(CC) $(CFLAGS) -g -fsanitize=thread -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^
 
 $(OBJS): | $(OBJDIR)
 

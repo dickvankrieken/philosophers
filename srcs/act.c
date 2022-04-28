@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:47 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/22 15:07:46 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/28 17:33:07 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ void	ph_eat(t_philosopher *philo)
 		philo->last_eaten = time_stamp();
 		printf("[%zu] (%d) is eating\n", time_passed(philo->data->start_time), philo->id);
 		usleep_more_accurate(philo->data->time_to_eat);
-		printf("[%zu] (%d) is thinking\n", time_passed(philo->data->start_time), philo->id);
 		pthread_mutex_unlock(philo->right_fork);
 		pthread_mutex_unlock(philo->left_fork);
 	}
@@ -44,5 +43,7 @@ void	ph_sleep(t_philosopher *philo)
 	{
 		printf("[%zu] (%d) is sleeping\n", time_passed(philo->data->start_time), philo->id);
 		usleep_more_accurate(philo->data->time_to_sleep);
+		printf("[%zu] (%d) is thinking\n", time_passed(philo->data->start_time), philo->id);
+
 	}
 }

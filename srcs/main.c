@@ -6,20 +6,18 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:11:09 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/25 17:57:06 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/28 18:35:59 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <pthread.h>
 #include <stdio.h>
-#include <stdlib.h>
+#include <unistd.h>
 #include "../incl/philosophers.h"
-#include "../incl/utils.h"
 #include "../incl/time.h"
 #include "../incl/threads.h"
 #include "../incl/error.h"
 #include "../incl/init.h"
-#include "../incl/act.h" //temp
-#include <unistd.h> //temp
 
 /* int	malloc_resources(t_data *data, int number_of_philosophers) */
 /* { */
@@ -32,46 +30,49 @@
 /* 	return (0); */
 /* } */
 
-void	death_checker(t_data *data)
-{
-	int	i;
 
-	i = 0;
-	while (i < data->number_of_philosophers)
+void	*ft_monitor(void *data)
+{
+	t_data	*data_pointer;
+
+	data_pointer = data;
+	while (1)
 	{
-		if (data->time_to_die < time_passed(data->philosophers[i].last_eaten))
-		{
-			/* doe iets wat er voor zorgt dat de hele simulatie stopt */
-			pthread_mutex_lock(&data->print_mutex);
-			printf("[%zu] (%d) died\n", time_passed(data->philosophers[i].last_eaten), i);
-			pthread_mutex_unlock(&data->print_mutex);
-			data->philosopher_dead = TRUE;
-			return ;
-		}
-		i++;
+		/* als de time_to_die is verstreken gerekend vanaf de last_eaten time van iedere ph, 
+		zet philosopher_dead naar true, print 'Philosopher died, en return de functie. */
+		
+
+		usleep(1000000);
 	}
-	usleep(5);
-	death_checker(data);
+
+	return (NULL);
 }
 
+t_err	start_monitoring_thread(t_data *data)
+{
+
+	pthread_create(&data->monitoring_thread, NULL, ft_monitor, &data);
+	return (SUCCESS);
+}
 
 int main(int argc, char *argv[])
 {
+	t_err			error;
 	t_data			data;
-	t_philosophers		philosophers[MAX_PHILOS];
-	p_thread_mutex_t	forks[MAX_PHILOS];
 
 	if (argc != 5 && argc != 6)
 		return (usage_error());
-	/* if (malloc_resources(&data, ft_atoi(argv[1])) == -1) */
-	/* 	return (error_handler(&data)); */
 	init_data(argc, argv, &data);
-	if (init_mutexes(&data))
-		return (error_handler(&data));
+	if ((error = init_mutexes(&data)) != SUCCESS)
+		return (error_handler(error));
 	set_start_time(&data);
-	init_philosophers(&data, data.philosophers, data.number_of_philosophers);
-	start_threads(&data);
-	death_checker(&data);
+	init_philosophers(&data);
+	// int i = -1;
+	// while (i++ < data.number_of_philosophers)
+	// 	printf("thread %d left fork: %p right fork: %p\n", i + 1, data.philosophers[i].left_fork, data.philosophers[i].right_fork);
+	if ((error = start_philo_threads(&data)) != SUCCESS)
+	 	return(error_handler(error));
+	start_monitoring_thread(&data);
 	pthread_join_all_threads(&data);
 }
 

@@ -3,7 +3,7 @@
 
 # include "philosophers.h"
 
-void	pthread_join_all_threads(t_data *data);
-int		start_threads(t_data *data);
+t_err	pthread_join_all_threads(t_data *data);
+int		start_philo_threads(t_data *data);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:06 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/25 17:58:43 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/28 16:18:41 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,21 +24,21 @@ void	init_data(int argc, char *argv[], t_data *data)
 		data->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
 }
 
-void	init_philosophers(t_data *data, t_philosopher *philosopher, int number_of_philosophers)
+void	init_philosophers(t_data *data)
 {
 	int	i;
 
 	i = 0;
-	while (i < number_of_philosophers)
+	while (i < data->number_of_philosophers)
 	{
-		philosopher[i].data = data;
-		philosopher[i].id = i + 1;
+		data->philosophers[i].data = data;
+		data->philosophers[i].id = i + 1;
 		if (i == 0)
-			philosopher[i].right_fork = &data->forks[data->number_of_philosophers - 1];
+			data->philosophers[i].right_fork = &data->forks[data->number_of_philosophers - 1];
 		else
-			philosopher[i].right_fork = &data->forks[i - 1];
-		philosopher[i].left_fork = &data->forks[i];
-		philosopher[i].last_eaten = data->start_time;
+			data->philosophers[i].right_fork = &data->forks[i - 1];
+		data->philosophers[i].left_fork = &data->forks[i];
+		data->philosophers[i].last_eaten = data->start_time;
 		i++;
 	}
 }

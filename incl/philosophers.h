@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:26 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/25 18:02:17 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/28 15:34:23 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,12 +15,15 @@
 
 # include <pthread.h>
 
+# define MAX_PHILOS 200
+
 typedef enum t_err
 {
 	SUCCESS,
 	MUTEX_FAIL,
+	PTHREAD_JOIN_FAIL,
 	PTHREAD_CREATE_FAIL
-}
+}	t_err;
 
 typedef enum e_bool
 {
@@ -41,8 +44,10 @@ typedef struct s_philosopher
 typedef struct s_data
 {
 	/* pthread_mutex_t	*forks; */
+	t_philosopher	philosophers[MAX_PHILOS];
 	pthread_mutex_t print_mutex;
-	t_philosopher	*philosophers;
+	pthread_mutex_t	forks[MAX_PHILOS];
+	pthread_t		monitoring_thread;
 	t_bool			philosopher_dead;
 	size_t			start_time;
 	size_t			time_to_die;
@@ -50,7 +55,6 @@ typedef struct s_data
 	size_t			time_to_sleep;
 	int				number_of_philosophers;
 	int				number_of_times_each_philosopher_must_eat;
-
 }	t_data;
 
 #endif
