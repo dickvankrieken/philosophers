@@ -4,5 +4,6 @@
 void	ph_take_forks(t_philosopher *philo);
 void	ph_eat(t_philosopher *philo);
 void	ph_sleep(t_philosopher *philo);
+void	ph_think(t_philosopher *philo);
 
 #endif

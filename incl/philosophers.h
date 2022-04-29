@@ -49,6 +49,7 @@ typedef struct s_data
 	pthread_mutex_t	forks[MAX_PHILOS];
 	pthread_t		monitoring_thread;
 	t_bool			philosopher_dead;
+	t_bool			number_of_times_passed;
 	size_t			start_time;
 	size_t			time_to_die;
 	size_t			time_to_eat;

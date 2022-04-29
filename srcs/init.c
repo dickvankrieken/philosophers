@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:06 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/28 16:18:41 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/04/29 17:46:32 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,13 @@ void	init_data(int argc, char *argv[], t_data *data)
 	data->time_to_eat = ft_atoi(argv[3]);
 	data->time_to_sleep = ft_atoi(argv[4]);
 	data->philosopher_dead = FALSE;
+	data->number_of_times_passed = FALSE;
 	if (argc == 6)
+	{
 		data->number_of_times_each_philosopher_must_eat = ft_atoi(argv[5]);
+	}
+	else
+		data->number_of_times_each_philosopher_must_eat = -1;
 }
 
 void	init_philosophers(t_data *data)

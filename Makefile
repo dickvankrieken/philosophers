@@ -17,13 +17,16 @@ all: $(NAME)
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
+thread: $(OBJS)
+	$(CC) $(CFLAGS) -fsanitize=thread -o ./philo $^
+
 $(OBJS): | $(OBJDIR)
 
 $(OBJDIR):
 	mkdir $(OBJDIR)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
-	$(CC) $(CFLAGS) -c -g $^ -o $@
+	$(CC) $(CFLAGS) -c  $^ -o $@
 
 clean:
 	rm -f $(NAME)
