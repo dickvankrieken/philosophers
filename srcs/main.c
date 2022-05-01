@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:11:09 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/29 19:16:15 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/01 13:22:08 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,15 +19,6 @@
 #include "../incl/threads.h"
 #include "../incl/error.h"
 #include "../incl/init.h"
-
-/* 
-check nu voor iedere ph, of 
-de tijd tussen last_eaten en NU
-groter is dan de time_to_die
-en als dat zo is, return TRUE.
-*/
-
-
 
 int	check_who_died(t_data *data)
 {
@@ -62,7 +53,9 @@ void	*ft_monitor(void *data)
 			{
 				pthread_mutex_unlock(data_pointer->philosophers[0].right_fork);
 			}
+			pthread_mutex_lock(&data_pointer->print_mutex);
 			printf("[%zu] (%d) died\n", time_passed(data_pointer->start_time), dead_philosopher_id + 1);
+			pthread_mutex_unlock(&data_pointer->print_mutex);
 			return (NULL);
 		}
 	}
