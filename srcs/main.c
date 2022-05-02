@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:11:09 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/01 13:22:08 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/02 12:27:12 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,8 @@ void	*ft_monitor(void *data)
 				pthread_mutex_unlock(data_pointer->philosophers[0].right_fork);
 			}
 			pthread_mutex_lock(&data_pointer->print_mutex);
-			printf("[%zu] (%d) died\n", time_passed(data_pointer->start_time), dead_philosopher_id + 1);
+			printf("[%zu] (%d) died\n", time_passed(data_pointer->start_time),
+				dead_philosopher_id + 1);
 			pthread_mutex_unlock(&data_pointer->print_mutex);
 			return (NULL);
 		}
@@ -69,7 +70,7 @@ t_err	start_monitoring_thread(t_data *data)
 	return (SUCCESS);
 }
 
-int main(int argc, char *argv[])
+int	main(int argc, char *argv[])
 {
 	t_err			error;
 	t_data			data;
@@ -77,19 +78,16 @@ int main(int argc, char *argv[])
 	if (argc != 5 && argc != 6)
 		return (usage_error());
 	init_data(argc, argv, &data);
-	if ((error = init_mutexes(&data)) != SUCCESS)
+	error = init_mutexes(&data);
+	if (error != SUCCESS)
 		return (error_handler(error));
 	set_start_time(&data);
 	init_philosophers(&data);
-	if ((error = start_monitoring_thread(&data)) != SUCCESS)
+	error = start_monitoring_thread(&data);
+	if (error != SUCCESS)
 		return (error_handler(error));
-	if ((error = start_philo_threads(&data)) != SUCCESS)
-	 	return(error_handler(error));
+	error = start_philo_threads(&data);
+	if (error != SUCCESS)
+		return (error_handler(error));
 	pthread_join_all_threads(&data);
 }
-
-/*
-number_of_philosophers time_to_die time_to_eat
-time_to_sleep
-[number_of_times_each_philosopher_must_eat]
-*/

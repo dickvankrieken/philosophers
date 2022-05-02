@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:27 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/01 13:21:33 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/02 12:19:44 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 
 void	usleep_more_accurate(size_t time)
 {
-	size_t 			time_passed;
+	size_t			time_passed;
 	size_t			time_start;
 
 	time_start = time_stamp();

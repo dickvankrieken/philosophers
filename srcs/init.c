@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:06 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/29 17:46:32 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/02 12:22:56 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,8 @@ void	init_philosophers(t_data *data)
 		data->philosophers[i].data = data;
 		data->philosophers[i].id = i + 1;
 		if (i == 0)
-			data->philosophers[i].right_fork = &data->forks[data->number_of_philosophers - 1];
+			data->philosophers[i].right_fork
+				= &data->forks[data->number_of_philosophers - 1];
 		else
 			data->philosophers[i].right_fork = &data->forks[i - 1];
 		data->philosophers[i].left_fork = &data->forks[i];

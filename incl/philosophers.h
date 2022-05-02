@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        ::::::::            */
-/*   philosophers.h                                      :+:    :+:            */
+/*   philosophers.h                                     :+:    :+:            */
 /*                                                     +:+                    */
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:26 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/28 15:34:23 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/02 12:26:41 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,13 +27,14 @@ typedef enum t_err
 
 typedef enum e_bool
 {
-	FALSE, TRUE
+	FALSE,
+	TRUE
 }	t_bool;
 
 typedef struct s_philosopher
 {
 	pthread_mutex_t	*left_fork;
-	pthread_mutex_t *right_fork;
+	pthread_mutex_t	*right_fork;
 	pthread_t		thread;
 	size_t			last_eaten;
 	int				id;
@@ -43,9 +44,8 @@ typedef struct s_philosopher
 
 typedef struct s_data
 {
-	/* pthread_mutex_t	*forks; */
 	t_philosopher	philosophers[MAX_PHILOS];
-	pthread_mutex_t print_mutex;
+	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	forks[MAX_PHILOS];
 	pthread_t		monitoring_thread;
 	t_bool			philosopher_dead;
