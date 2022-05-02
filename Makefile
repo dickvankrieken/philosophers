@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         ::::::::             #
+#    Makefile                                           :+:    :+:             #
+#                                                      +:+                     #
+#    By: dvan-kri <dvan-kri@student.codam.nl>         +#+                      #
+#                                                    +#+                       #
+#    Created: 2022/05/02 16:45:56 by dvan-kri      #+#    #+#                  #
+#    Updated: 2022/05/02 17:19:11 by dvan-kri      ########   odam.nl          #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = philo
 
 SRCS = main.c time.c utils.c threads.c time.c act.c error.c init.c
@@ -19,6 +31,10 @@ $(NAME): $(OBJS)
 
 thread: $(OBJS)
 	$(CC) $(CFLAGS) -fsanitize=thread -o ./philo $^
+
+debug: $(OBJS)
+	$(CC) $(CFLAGS) -g -o ./philo $^
+
 
 $(OBJS): | $(OBJDIR)
 
