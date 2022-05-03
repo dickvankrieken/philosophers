@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:15 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/02 13:42:07 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/03 16:09:15 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include "../incl/philosophers.h"
 #include "../incl/time.h"
 #include "../incl/act.h"
+#include "../incl/utils.h"
 
 t_err	pthread_join_all_threads(t_data *data)
 {
@@ -37,13 +38,17 @@ t_err	pthread_join_all_threads(t_data *data)
 
 void	act(t_philosopher *philosophers)
 {
-	if (philosophers->data->philosopher_dead == FALSE)
+	if (check_bool_with_mutex(&philosophers->data->dead_mutex, &philosophers->data->philosopher_dead)
+		== FALSE)
 		ph_take_forks(philosophers);
-	if (philosophers->data->philosopher_dead == FALSE)
+	if (check_bool_with_mutex(&philosophers->data->dead_mutex, &philosophers->data->philosopher_dead)
+		== FALSE)
 		ph_eat(philosophers);
-	if (philosophers->data->philosopher_dead == FALSE)
+	if (check_bool_with_mutex(&philosophers->data->dead_mutex, &philosophers->data->philosopher_dead)
+		== FALSE)
 		ph_sleep(philosophers);
-	if (philosophers->data->philosopher_dead == FALSE)
+	if (check_bool_with_mutex(&philosophers->data->dead_mutex, &philosophers->data->philosopher_dead)
+		== FALSE)
 		ph_think(philosophers);
 }
 
@@ -69,12 +74,12 @@ void	*ft_philosopher(void *philosopher)
 	if (philo_pointer->id % 2 == 0)
 		usleep(100);
 	if (philo_pointer->data->number_of_times_each_philosopher_must_eat > -1)
-	{	
+	{
 		act_number_of_times(philo_pointer);
 	}
 	else
 	{
-		while (philo_pointer->data->philosopher_dead == FALSE)
+		while (check_bool_with_mutex(&philo_pointer->data->dead_mutex, &philo_pointer->data->philosopher_dead) == FALSE)
 		{
 			act(philo_pointer);
 		}

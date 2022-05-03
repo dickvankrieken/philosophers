@@ -6,38 +6,44 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:47 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/02 17:32:05 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/03 16:23:56 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <stdio.h>
 #include "../incl/philosophers.h"
 #include "../incl/time.h"
+#include "../incl/utils.h"
 
 void	ph_take_forks(t_philosopher *philo)
 {
-	pthread_mutex_lock(philo->right_fork); // TODO maak een functie die alle forken unlockt.
-	if (philo->data->philosopher_dead == FALSE) // TODO protect read statements zoals deze
+	pthread_mutex_lock(philo->right_fork);
+	if (check_bool_with_mutex(&philo->data->dead_mutex, &philo->data->philosopher_dead) == FALSE)
 	{
+		/* pthread_mutex_lock(philo->data->start_time_mutex); */
 		printf("%zu %d has taken a fork\n",
 			time_passed(philo->data->start_time), philo->id);
+		/* pthread_mutex_unlock(philo->data->start_time_mutex); */
 	}
 	pthread_mutex_lock(philo->left_fork);
-	if (philo->data->philosopher_dead == FALSE)
+	if (check_bool_with_mutex(&philo->data->dead_mutex, &philo->data->philosopher_dead) == FALSE)
 	{
+		/* pthread_mutex_lock(philo->data->start_time_mutex); */
 		printf("%zu %d has taken a fork\n",
 			time_passed(philo->data->start_time), philo->id);
+		/* pthread_mutex_unlock(philo->data->start_time_mutex); */
 	}
 }
 
 void	ph_eat(t_philosopher *philo)
 {
-	if (philo->data->philosopher_dead == FALSE)
+	if (check_bool_with_mutex(&philo->data->dead_mutex, &philo->data->philosopher_dead) == FALSE)
 	{
+		pthread_mutex_lock(&philo->data->last_eaten_mutex);
 		philo->last_eaten = time_stamp();
+		pthread_mutex_unlock(&philo->data->last_eaten_mutex);
 		printf("%zu %d is eating\n",
-			time_passed(philo->data->start_time), philo->id); //TODO protect deze time_passed calls met een mutex
-		pthread_mutex_unlock(&philo->data->print_mutex);
+			time_passed(philo->data->start_time), philo->id);
 		usleep_more_accurate(philo->data->time_to_eat);
 	}
 	if (philo->data->number_of_philosophers != 1)
@@ -49,23 +55,21 @@ void	ph_eat(t_philosopher *philo)
 
 void	ph_sleep(t_philosopher *philo)
 {
-	if (philo->data->philosopher_dead == FALSE)
+	if (check_bool_with_mutex(&philo->data->dead_mutex, &philo->data->philosopher_dead) == FALSE)
 	{
-		pthread_mutex_lock(&philo->data->print_mutex);
+	 /* TODO protect deze start_time calls met een mutex*/
 		printf("%zu %d is sleeping\n",
 			time_passed(philo->data->start_time), philo->id);
-		pthread_mutex_unlock(&philo->data->print_mutex);
 		usleep_more_accurate(philo->data->time_to_sleep);
 	}
 }
 
 void	ph_think(t_philosopher *philo)
 {
-	if (philo->data->philosopher_dead == FALSE)
+	if (check_bool_with_mutex(&philo->data->dead_mutex, &philo->data->philosopher_dead) == FALSE)
 	{
-		pthread_mutex_lock(&philo->data->print_mutex);
+	 /* TODO protect deze start_time calls met een mutex*/
 		printf("%zu %d is thinking\n",
 			time_passed(philo->data->start_time), philo->id);
-		pthread_mutex_unlock(&philo->data->print_mutex);
 	}
 }

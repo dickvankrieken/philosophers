@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:11:09 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/02 17:09:27 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/03 16:18:34 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,7 @@
 #include "../incl/threads.h"
 #include "../incl/error.h"
 #include "../incl/init.h"
+#include "../incl/utils.h"
 
 int	check_who_died(t_data *data)
 {
@@ -27,10 +28,13 @@ int	check_who_died(t_data *data)
 	i = 0;
 	while (i < data->number_of_philosophers)
 	{
+		pthread_mutex_lock(&data->last_eaten_mutex);
 		if (time_passed(data->philosophers[i].last_eaten) > data->time_to_die)
 		{
+			pthread_mutex_unlock(&data->last_eaten_mutex);
 			return (i);
-		}	
+		}
+		pthread_mutex_unlock(&data->last_eaten_mutex);
 		i++;
 	}
 	return (-1);
@@ -43,20 +47,16 @@ void	*ft_monitor(void *data)
 
 	dead_philosopher_id = 0;
 	data_pointer = data;
-	while (data_pointer->number_of_times_passed == FALSE)
+	while (check_bool_with_mutex(&data_pointer->number_of_meals_mutex, &data_pointer->number_of_times_passed) == FALSE)
 	{
 		dead_philosopher_id = check_who_died(data_pointer);
 		if ((dead_philosopher_id != -1))
 		{
+			pthread_mutex_lock(&data_pointer->dead_mutex);
 			data_pointer->philosopher_dead = TRUE;
-			if (data_pointer->number_of_philosophers == 1)
-			{
-				pthread_mutex_unlock(data_pointer->philosophers[0].right_fork);
-			}
-			pthread_mutex_lock(&data_pointer->print_mutex);
+			pthread_mutex_unlock(&data_pointer->dead_mutex);
 			printf("%zu %d died\n", time_passed(data_pointer->start_time),
-				dead_philosopher_id + 1); //TODO start time mutex protect
-			pthread_mutex_unlock(&data_pointer->print_mutex);
+				dead_philosopher_id + 1);
 			return (NULL);
 		}
 	}

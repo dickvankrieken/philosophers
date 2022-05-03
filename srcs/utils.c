@@ -6,9 +6,11 @@
 /*   By: dvan-kri <dvan-kri@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/12 14:04:59 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/12 14:05:13 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/03 15:44:33 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "../incl/philosophers.h"
 
 static int	ft_isspace(const char str)
 {
@@ -16,6 +18,21 @@ static int	ft_isspace(const char str)
 		|| str == '\v' || str == '\f' || str == '\r')
 		return (1);
 	return (0);
+}
+
+t_bool	check_bool_with_mutex(pthread_mutex_t *mutex, t_bool *bool)
+{
+	pthread_mutex_lock(mutex);
+	if (*bool == TRUE)
+	{
+		pthread_mutex_unlock(mutex);
+		return (TRUE);
+	}
+	else
+	{
+		pthread_mutex_unlock(mutex);
+		return (FALSE);
+	}
 }
 
 int	ft_atoi(const char *str)

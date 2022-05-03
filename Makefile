@@ -6,7 +6,7 @@
 #    By: dvan-kri <dvan-kri@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/05/02 16:45:56 by dvan-kri      #+#    #+#                  #
-#    Updated: 2022/05/02 17:19:11 by dvan-kri      ########   odam.nl          #
+#    Updated: 2022/05/03 16:26:17 by dvan-kri      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -30,11 +30,10 @@ $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
 
 thread: $(OBJS)
-	$(CC) $(CFLAGS) -fsanitize=thread -o ./philo $^
+	$(CC) $(CFLAGS) -g -fsanitize=thread -o ./philo $^
 
 debug: $(OBJS)
 	$(CC) $(CFLAGS) -g -o ./philo $^
-
 
 $(OBJS): | $(OBJDIR)
 

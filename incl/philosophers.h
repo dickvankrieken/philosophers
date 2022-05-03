@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:26 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/02 12:26:41 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/03 16:01:13 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,8 +45,10 @@ typedef struct s_philosopher
 typedef struct s_data
 {
 	t_philosopher	philosophers[MAX_PHILOS];
-	pthread_mutex_t	print_mutex;
 	pthread_mutex_t	forks[MAX_PHILOS];
+	pthread_mutex_t	dead_mutex;
+	pthread_mutex_t	last_eaten_mutex;
+	pthread_mutex_t	number_of_meals_mutex;
 	pthread_t		monitoring_thread;
 	t_bool			philosopher_dead;
 	t_bool			number_of_times_passed;

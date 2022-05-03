@@ -6,10 +6,11 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:06 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/02 12:22:56 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/03 16:44:08 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
+#include <stdio.h> //temp
 #include "../incl/philosophers.h"
 #include "../incl/utils.h"
 
@@ -60,7 +61,11 @@ t_err	init_mutexes(t_data *data)
 			return (MUTEX_FAIL);
 		i++;
 	}
-	if (pthread_mutex_init(&data->print_mutex, NULL) == -1)
+	if (pthread_mutex_init(&data->dead_mutex, NULL) == -1)
 		return (MUTEX_FAIL);
+	if (pthread_mutex_init(&data->last_eaten_mutex, NULL) == -1)
+		return (MUTEX_FAIL);
+	if (pthread_mutex_init(&data->number_of_meals_mutex, NULL) == -1)
+		return (MUTEX_FAIL);		
 	return (0);
 }
