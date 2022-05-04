@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:11:09 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/03 16:18:34 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/04 13:55:25 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,8 @@ void	*ft_monitor(void *data)
 
 	dead_philosopher_id = 0;
 	data_pointer = data;
-	while (check_bool_with_mutex(&data_pointer->number_of_meals_mutex, &data_pointer->number_of_times_passed) == FALSE)
+	while (check_bool_with_mutex(&data_pointer->number_of_meals_mutex,
+			&data_pointer->number_of_times_passed) == FALSE)
 	{
 		dead_philosopher_id = check_who_died(data_pointer);
 		if ((dead_philosopher_id != -1))
