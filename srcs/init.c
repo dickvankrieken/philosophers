@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:06 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/09 11:34:41 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/09 11:54:06 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,6 @@ t_err	init_mutexes(t_data *data)
 	if (pthread_mutex_init(&data->last_eaten_mutex, NULL) == -1)
 		return (MUTEX_FAIL);
 	if (pthread_mutex_init(&data->number_of_meals_mutex, NULL) == -1)
-		return (MUTEX_FAIL);		
+		return (MUTEX_FAIL);
 	return (0);
 }
