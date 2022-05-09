@@ -6,7 +6,7 @@
 #    By: dvan-kri <dvan-kri@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/05/02 16:45:56 by dvan-kri      #+#    #+#                  #
-#    Updated: 2022/05/04 14:00:29 by dvan-kri      ########   odam.nl          #
+#    Updated: 2022/05/09 11:50:30 by dvan-kri      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -28,14 +28,6 @@ all: $(NAME)
 
 $(NAME): $(OBJS)
 	$(CC) $(CFLAGS) -o $@ $^
-
-#temp
-thread: $(OBJS)
-	$(CC) $(CFLAGS) -g -fsanitize=thread -o ./philo $^
-
-debug: $(OBJS)
-	$(CC) $(CFLAGS) -g -o ./philo $^
-#end temp
 
 $(OBJS): | $(OBJDIR)
 

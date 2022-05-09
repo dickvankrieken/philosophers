@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:15 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/09 11:34:43 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/09 11:42:11 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,22 +37,10 @@ t_err	pthread_join_all_threads(t_data *data)
 
 void	act(t_philosopher *philosophers)
 {
-	// if (check_bool_with_mutex(&philosophers->data->dead_mutex,
-	// 		&philosophers->data->philosopher_dead)
-	// 	== FALSE)
-		ph_take_forks(philosophers);
-	// if (check_bool_with_mutex(&philosophers->data->dead_mutex,
-	// 		&philosophers->data->philosopher_dead)
-	// 	== FALSE)
-		ph_eat(philosophers);
-	// if (check_bool_with_mutex(&philosophers->data->dead_mutex,
-	// 		&philosophers->data->philosopher_dead)
-	// 	== FALSE)
-		ph_sleep(philosophers);
-	// if (check_bool_with_mutex(&philosophers->data->dead_mutex,
-	// 		&philosophers->data->philosopher_dead)
-	// 	== FALSE)
-		ph_think(philosophers);
+	ph_take_forks(philosophers);
+	ph_eat(philosophers);
+	ph_sleep(philosophers);
+	ph_think(philosophers);
 }
 
 void	act_number_of_times(t_philosopher *philosophers)

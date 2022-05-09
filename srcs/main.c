@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:11:09 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/09 11:34:50 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/09 11:44:19 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,14 @@ static t_err	start_monitoring_thread(t_data *data)
 	return (SUCCESS);
 }
 
-static t_err validate_input(int argc, t_data data)
+static t_err	validate_input(int argc, t_data data)
 {
-	if (data.number_of_philosophers < 1 || data.time_to_eat < 1 
-		|| data.time_to_die < 1	|| data.time_to_sleep < 1)
+	if (data.number_of_philosophers < 1 || data.time_to_eat < 1
+		|| data.time_to_die < 1 || data.time_to_sleep < 1)
 		return (WRONG_ARGUMENT);
 	if (argc == 6 && data.number_of_times_each_philosopher_must_eat < 1)
 		return (WRONG_ARGUMENT);
 	return (SUCCESS);
-		
 }
 
 int	main(int argc, char *argv[])

@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:47 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/04 14:16:11 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/09 11:41:54 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,11 +45,8 @@ void	ph_eat(t_philosopher *philo)
 			time_passed(philo->data->start_time), philo->id);
 		usleep_more_accurate(philo->data->time_to_eat);
 	}
-	// if (philo->data->number_of_philosophers != 1)
-	// {
-		pthread_mutex_unlock(philo->right_fork);
-		pthread_mutex_unlock(philo->left_fork);
-	// }
+	pthread_mutex_unlock(philo->right_fork);
+	pthread_mutex_unlock(philo->left_fork);
 }
 
 void	ph_sleep(t_philosopher *philo)
