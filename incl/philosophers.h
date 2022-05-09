@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:26 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/03 16:01:13 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/08 16:44:21 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,7 @@
 typedef enum t_err
 {
 	SUCCESS,
+	WRONG_ARGUMENT,
 	MUTEX_FAIL,
 	PTHREAD_JOIN_FAIL,
 	PTHREAD_CREATE_FAIL

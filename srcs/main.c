@@ -6,14 +6,13 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:11:09 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/04 13:55:25 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/09 11:34:50 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <pthread.h>
 #include <stdio.h>
 #include <unistd.h>
-#include <stdlib.h> //temp
 #include "../incl/philosophers.h"
 #include "../incl/time.h"
 #include "../incl/threads.h"
@@ -21,7 +20,7 @@
 #include "../incl/init.h"
 #include "../incl/utils.h"
 
-int	check_who_died(t_data *data)
+static int	check_who_died(t_data *data)
 {
 	int	i;
 
@@ -32,6 +31,7 @@ int	check_who_died(t_data *data)
 		if (time_passed(data->philosophers[i].last_eaten) > data->time_to_die)
 		{
 			pthread_mutex_unlock(&data->last_eaten_mutex);
+			unlock_all_forks(data);
 			return (i);
 		}
 		pthread_mutex_unlock(&data->last_eaten_mutex);
@@ -40,7 +40,7 @@ int	check_who_died(t_data *data)
 	return (-1);
 }
 
-void	*ft_monitor(void *data)
+static void	*ft_monitor(void *data)
 {
 	t_data	*data_pointer;
 	int		dead_philosopher_id;
@@ -64,11 +64,22 @@ void	*ft_monitor(void *data)
 	return (NULL);
 }
 
-t_err	start_monitoring_thread(t_data *data)
+static t_err	start_monitoring_thread(t_data *data)
 {
 	if (pthread_create(&data->monitoring_thread, NULL, ft_monitor, data) != 0)
 		return (PTHREAD_CREATE_FAIL);
 	return (SUCCESS);
+}
+
+static t_err validate_input(int argc, t_data data)
+{
+	if (data.number_of_philosophers < 1 || data.time_to_eat < 1 
+		|| data.time_to_die < 1	|| data.time_to_sleep < 1)
+		return (WRONG_ARGUMENT);
+	if (argc == 6 && data.number_of_times_each_philosopher_must_eat < 1)
+		return (WRONG_ARGUMENT);
+	return (SUCCESS);
+		
 }
 
 int	main(int argc, char *argv[])
@@ -77,8 +88,14 @@ int	main(int argc, char *argv[])
 	t_data			data;
 
 	if (argc != 5 && argc != 6)
-		return (usage_error());
+	{
+		printf("Invalid number of arguments");
+		return (0);
+	}
 	init_data(argc, argv, &data);
+	error = validate_input(argc, data);
+	if (error != SUCCESS)
+		return (error_handler(error));
 	error = init_mutexes(&data);
 	if (error != SUCCESS)
 		return (error_handler(error));

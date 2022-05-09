@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/12 14:04:59 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/03 15:44:33 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/09 11:27:54 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,16 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (res * k);
+}
+
+void	unlock_all_forks(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	while (i < data->number_of_philosophers)
+	{
+		pthread_mutex_unlock(&data->forks[i]);
+		i++;
+	}
 }

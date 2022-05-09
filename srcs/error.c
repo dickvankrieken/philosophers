@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:41 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/04/28 17:29:12 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/08 16:50:43 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,13 +16,14 @@
 
 int	usage_error(void)
 {
-	printf("Invalid number of arguments");
 	return (1);
 }
 
 void	error_handler(t_err error)
 {
-	if (error == MUTEX_FAIL)
+	if (error == WRONG_ARGUMENT)
+		printf("An error has occured: WRONG ARGUMENT");
+	else if (error == MUTEX_FAIL)
 		printf("An error has occured: MUTEX FAILED");
 	else if (error == PTHREAD_CREATE_FAIL)
 		printf("An error has occured: PTHREAD CREATE FAILED");
