@@ -32,7 +32,7 @@ void	usleep_more_accurate(t_data *data, size_t time)
 		{
 			pthread_mutex_lock(&data->dead_mutex);
 			if (data->philosopher_dead == TRUE)
-				break;
+				break ;
 			pthread_mutex_unlock(&data->dead_mutex);
 		}
 	}

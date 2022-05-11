@@ -56,7 +56,8 @@ t_err	init_mutexes(t_data *data)
 	{
 		if (pthread_mutex_init(&data->forks[i], NULL) == -1)
 			return (MUTEX_FAIL);
-		if (pthread_mutex_init(&data->philosophers[i].last_eaten_mutex, NULL) == -1)
+		if (pthread_mutex_init(&data->philosophers[i]
+				.last_eaten_mutex, NULL) == -1)
 			return (MUTEX_FAIL);
 		i++;
 	}

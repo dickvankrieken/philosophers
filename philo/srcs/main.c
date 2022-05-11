@@ -74,8 +74,9 @@ static t_err	start_monitoring_thread(t_data *data)
 
 static t_err	validate_input(int argc, t_data data)
 {
-	if (data.number_of_philosophers < 1 || data.number_of_philosophers > 200 || data.time_to_eat < 1
-		|| data.time_to_die < 1 || data.time_to_sleep < 1)
+	if (data.number_of_philosophers < 1 || data.number_of_philosophers > 200
+		|| data.time_to_eat < 1 || data.time_to_die < 1
+		|| data.time_to_sleep < 1)
 		return (WRONG_ARGUMENT);
 	if (argc == 6 && data.number_of_times_each_philosopher_must_eat < 1)
 		return (WRONG_ARGUMENT);
