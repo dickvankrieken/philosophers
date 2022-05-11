@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/12 14:04:59 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/09 11:44:37 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/11 13:17:01 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,21 +18,6 @@ static int	ft_isspace(const char str)
 		|| str == '\v' || str == '\f' || str == '\r')
 		return (1);
 	return (0);
-}
-
-t_bool	check_bool_with_mutex(pthread_mutex_t *mutex, t_bool *bool)
-{
-	pthread_mutex_lock(mutex);
-	if (*bool == TRUE)
-	{
-		pthread_mutex_unlock(mutex);
-		return (TRUE);
-	}
-	else
-	{
-		pthread_mutex_unlock(mutex);
-		return (FALSE);
-	}
 }
 
 int	ft_atoi(const char *str)
@@ -59,6 +44,21 @@ int	ft_atoi(const char *str)
 		i++;
 	}
 	return (res * k);
+}
+
+t_bool	check_bool_with_mutex(pthread_mutex_t *mutex, t_bool *bool)
+{
+	pthread_mutex_lock(mutex);
+	if (*bool == TRUE)
+	{
+		pthread_mutex_unlock(mutex);
+		return (TRUE);
+	}
+	else
+	{
+		pthread_mutex_unlock(mutex);
+		return (FALSE);
+	}
 }
 
 void	unlock_all_forks(t_data *data)

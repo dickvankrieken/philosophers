@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:15 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/09 17:48:14 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/11 13:18:59 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,7 @@
 #include "../incl/act.h"
 #include "../incl/utils.h"
 
-t_err	pthread_join_all_threads(t_data *data)
-{
-	int	i;
-
-	if (pthread_join(data->monitoring_thread, NULL) != 0)
-		return (PTHREAD_JOIN_FAIL);
-	i = 0;
-	while (i < data->number_of_philosophers)
-	{
-		if (pthread_join(data->philosophers[i].thread, NULL) != 0)
-		{
-			return (PTHREAD_JOIN_FAIL);
-		}
-		i++;
-	}
-	return (SUCCESS);
-}
-
-void	act(t_philosopher *philosophers)
+static void	act(t_philosopher *philosophers)
 {
 	ph_take_forks(philosophers);
 	ph_eat(philosophers);
@@ -43,7 +25,7 @@ void	act(t_philosopher *philosophers)
 	ph_think(philosophers);
 }
 
-void	act_number_of_times(t_philosopher *philosophers)
+static void	act_number_of_times(t_philosopher *philosophers)
 {
 	int	i;
 
@@ -79,6 +61,24 @@ void	*ft_philosopher(void *philosopher)
 		}
 	}
 	return (NULL);
+}
+
+t_err	pthread_join_all_threads(t_data *data)
+{
+	int	i;
+
+	if (pthread_join(data->monitoring_thread, NULL) != 0)
+		return (PTHREAD_JOIN_FAIL);
+	i = 0;
+	while (i < data->number_of_philosophers)
+	{
+		if (pthread_join(data->philosophers[i].thread, NULL) != 0)
+		{
+			return (PTHREAD_JOIN_FAIL);
+		}
+		i++;
+	}
+	return (SUCCESS);
 }
 
 t_err	start_philo_threads(t_data *data)

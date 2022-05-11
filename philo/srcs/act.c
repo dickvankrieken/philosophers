@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:47 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/09 18:24:29 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/11 13:23:15 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,12 @@ void	ph_eat(t_philosopher *philo)
 		pthread_mutex_lock(&philo->last_eaten_mutex);
 		philo->last_eaten = time_stamp();
 		pthread_mutex_unlock(&philo->last_eaten_mutex);
-		printf("%d %d is eating\n",
-			time_passed(philo->data->start_time), philo->id);
+		if (check_bool_with_mutex(&philo->data->dead_mutex,
+				&philo->data->philosopher_dead) == FALSE)
+		{
+			printf("%d %d is eating\n",
+				time_passed(philo->data->start_time), philo->id);
+		}
 		usleep_more_accurate(philo->data, philo->data->time_to_eat);
 	}
 	pthread_mutex_unlock(philo->right_fork);

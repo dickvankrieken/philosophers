@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:27 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/09 18:25:42 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/11 13:27:41 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	set_start_time(t_data *data)
 	data->start_time = time_stamp();
 }
 
-int		time_stamp(void)
+int	time_stamp(void)
 {
 	struct timeval	the_time;
 	size_t			time_in_milliseconds;
@@ -54,7 +54,7 @@ int		time_stamp(void)
 	return (time_in_milliseconds);
 }
 
-int		time_passed(size_t start)
+int	time_passed(size_t start)
 {
 	return (time_stamp() - start);
 }
