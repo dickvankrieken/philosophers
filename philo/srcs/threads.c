@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:15 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/11 13:18:59 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/11 16:27:35 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static void	act_number_of_times(t_philosopher *philosophers)
 
 	i = 0;
 	while ((i < philosophers->data->number_of_times_each_philosopher_must_eat)
-		&& (philosophers->data->philosopher_dead == FALSE))
+		&& check_bool_with_mutex(philosophers->data->dead_mutex,
+		philosophers->data->philosopher_dead))
 	{
 		act(philosophers);
 		i++;
