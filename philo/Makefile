@@ -6,7 +6,7 @@
 #    By: dvan-kri <dvan-kri@student.codam.nl>         +#+                      #
 #                                                    +#+                       #
 #    Created: 2022/05/02 16:45:56 by dvan-kri      #+#    #+#                  #
-#    Updated: 2022/05/09 11:50:30 by dvan-kri      ########   odam.nl          #
+#    Updated: 2022/05/12 15:49:18 by dvan-kri      ########   odam.nl          #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,10 +38,10 @@ $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	$(CC) $(CFLAGS) -c  $^ -o $@
 
 clean:
-	rm -f $(NAME)
+	rm -rf $(OBJDIR)
 
 fclean: clean
-	rm -rf $(NAME) $(OBJDIR)
+	rm -f $(NAME)
 
 re: fclean
 	$(MAKE)
