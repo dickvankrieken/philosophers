@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:47 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/11 13:23:15 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/16 11:43:41 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,22 +15,22 @@
 #include "../incl/time.h"
 #include "../incl/utils.h"
 
+static void	ph_take_fork(t_philosopher *philo)
+{
+	if (check_bool_with_mutex(&philo->data->dead_mutex,
+			&philo->data->philosopher_dead) == FALSE)
+	{
+		printf("%d %d has taken a fork\n",
+			time_passed(philo->data->start_time), philo->id);
+	}	
+}
+
 void	ph_take_forks(t_philosopher *philo)
 {
 	pthread_mutex_lock(philo->right_fork);
-	if (check_bool_with_mutex(&philo->data->dead_mutex,
-			&philo->data->philosopher_dead) == FALSE)
-	{
-		printf("%d %d has taken a fork\n",
-			time_passed(philo->data->start_time), philo->id);
-	}
+	ph_take_fork(philo);
 	pthread_mutex_lock(philo->left_fork);
-	if (check_bool_with_mutex(&philo->data->dead_mutex,
-			&philo->data->philosopher_dead) == FALSE)
-	{
-		printf("%d %d has taken a fork\n",
-			time_passed(philo->data->start_time), philo->id);
-	}
+	ph_take_fork(philo);
 }
 
 void	ph_eat(t_philosopher *philo)
