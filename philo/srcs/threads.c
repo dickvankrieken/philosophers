@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:15 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/12 16:04:41 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/17 18:13:28 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,17 @@
 #include "../incl/act.h"
 #include "../incl/utils.h"
 
-static void	act(t_philosopher *philosophers)
+static t_bool	act(t_philosopher *philosophers)
 {
-	ph_take_forks(philosophers);
-	ph_eat(philosophers);
-	ph_sleep(philosophers);
-	ph_think(philosophers);
+	if (ph_take_forks(philosophers) == TRUE)
+		return (TRUE);
+	if (ph_eat(philosophers) == TRUE)
+		return (TRUE);
+	if (ph_sleep(philosophers) == TRUE)
+		return (TRUE);
+	if (ph_think(philosophers) == TRUE)
+		return (TRUE);
+	return (FALSE);
 }
 
 static void	act_number_of_times(t_philosopher *philosophers)
@@ -30,11 +35,10 @@ static void	act_number_of_times(t_philosopher *philosophers)
 	int	i;
 
 	i = 0;
-	while ((i < philosophers->data->number_of_times_each_philosopher_must_eat)
-		&& check_bool_with_mutex(&philosophers->data->dead_mutex,
-			&philosophers->data->philosopher_dead) == FALSE)
+	while ((i < philosophers->data->number_of_times_each_philosopher_must_eat))
 	{
-		act(philosophers);
+		if (act(philosophers) == TRUE)
+			return ;
 		i++;
 	}
 	pthread_mutex_lock(&philosophers->data->number_of_meals_mutex);
@@ -55,10 +59,10 @@ void	*ft_philosopher(void *philosopher)
 	}
 	else
 	{
-		while (check_bool_with_mutex(&philo_pointer->data->dead_mutex,
-				&philo_pointer->data->philosopher_dead) == FALSE)
+		while (1)
 		{
-			act(philo_pointer);
+			if (act(philo_pointer) == TRUE)
+				return (NULL);
 		}
 	}
 	return (NULL);

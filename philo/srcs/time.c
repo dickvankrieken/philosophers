@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:27 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/11 13:27:41 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/17 17:39:42 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,19 +24,22 @@ void	usleep_more_accurate(t_data *data, size_t time)
 	times = 0;
 	time_start = time_stamp();
 	time_passed = 0;
-	while (time_passed < time)
+	while (time_passed <= time)
 	{
-		usleep(100);
+		usleep(1000);
 		time_passed = time_stamp() - time_start;
-		if ((times % 10) == 0)
+		if ((times % 50) == 0)
 		{
 			pthread_mutex_lock(&data->dead_mutex);
 			if (data->philosopher_dead == TRUE)
+			{
+				pthread_mutex_unlock(&data->dead_mutex);
 				break ;
+			}
 			pthread_mutex_unlock(&data->dead_mutex);
 		}
+		times++;
 	}
-	pthread_mutex_unlock(&data->dead_mutex);
 }
 
 void	set_start_time(t_data *data)
@@ -44,7 +47,7 @@ void	set_start_time(t_data *data)
 	data->start_time = time_stamp();
 }
 
-int	time_stamp(void)
+size_t	time_stamp(void)
 {
 	struct timeval	the_time;
 	size_t			time_in_milliseconds;
