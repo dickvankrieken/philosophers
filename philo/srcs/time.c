@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:27 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/17 17:39:42 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/23 13:43:08 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ size_t	time_stamp(void)
 	return (time_in_milliseconds);
 }
 
-int	time_passed(size_t start)
+size_t	time_passed(size_t start)
 {
 	return (time_stamp() - start);
 }
