@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:11:09 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/17 17:17:56 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/23 14:54:08 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static void	*ft_monitor(void *data)
 		{
 			pthread_mutex_lock(&data_pointer->dead_mutex);
 			data_pointer->philosopher_dead = TRUE;
-			printf("%d %d died\n", time_passed(data_pointer->start_time),
+			printf("%zu %d died\n", time_passed(data_pointer->start_time),
 				dead_philosopher_id + 1);
 			pthread_mutex_unlock(&data_pointer->dead_mutex);
 			return (NULL);
@@ -100,7 +100,7 @@ int	main(int argc, char *argv[])
 	error = init_mutexes(&data);
 	if (error != SUCCESS)
 		return (error_handler(error));
-	set_start_time(&data);
+	data.start_time = time_stamp();
 	init_philosophers(&data);
 	error = start_monitoring_thread(&data);
 	if (error != SUCCESS)
