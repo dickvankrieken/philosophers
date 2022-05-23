@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:26 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/11 13:28:06 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/18 10:46:42 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,9 +53,9 @@ typedef struct s_data
 	pthread_t		monitoring_thread;
 	t_bool			philosopher_dead;
 	t_bool			number_of_times_passed;
-	int				start_time;
-	int				time_to_die;
-	int				time_to_eat;
+	size_t			start_time;
+	size_t			time_to_die;
+	size_t			time_to_eat;
 	size_t			time_to_sleep;
 	int				number_of_philosophers;
 	int				number_of_times_each_philosopher_must_eat;
