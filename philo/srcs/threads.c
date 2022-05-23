@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 12:07:15 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/17 18:13:28 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/23 13:41:44 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	*ft_philosopher(void *philosopher)
 
 	philo_pointer = philosopher;
 	if (philo_pointer->id % 2 == 0)
-		usleep(100);
+		usleep_more_accurate(philo_pointer->data, 80);
 	if (philo_pointer->data->number_of_times_each_philosopher_must_eat > -1)
 	{
 		act_number_of_times(philo_pointer);
