@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.codam.nl>         +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/21 15:10:27 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/23 15:21:26 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/23 15:28:11 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ void	set_start_time(t_data *data)
 long long	time_stamp(void)
 {
 	struct timeval	the_time;
-	long long			time_in_milliseconds;
+	long long		time_in_milliseconds;
 
 	gettimeofday(&the_time, NULL);
 	time_in_milliseconds = (the_time.tv_sec * 1000) + (the_time.tv_usec / 1000);
