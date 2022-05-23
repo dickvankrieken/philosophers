@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/12 14:04:59 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/23 13:04:37 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/23 15:25:20 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ t_bool	print_act(t_philosopher *philo, char *msg)
 	pthread_mutex_lock(&philo->data->dead_mutex);
 	if (philo->data->philosopher_dead == FALSE)
 	{
-		printf("%zu %d %s\n",
+		printf("%lld %d %s\n",
 			time_passed(philo->data->start_time), philo->id, msg);
 	}
 	else

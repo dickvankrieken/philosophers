@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/12 14:08:41 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/18 10:48:52 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/23 15:21:09 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 
 # include "philosophers.h"
 
-void	usleep_more_accurate(t_data *data, size_t time);
-size_t	time_stamp(void);
-size_t	time_passed(size_t start);
+void	usleep_more_accurate(t_data *data, long long time);
+long long	time_stamp(void);
+long long	time_passed(long long start);
 
 #endif
