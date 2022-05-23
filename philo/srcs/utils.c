@@ -6,7 +6,7 @@
 /*   By: dvan-kri <dvan-kri@student.42.fr>            +#+                     */
 /*                                                   +#+                      */
 /*   Created: 2022/04/12 14:04:59 by dvan-kri      #+#    #+#                 */
-/*   Updated: 2022/05/17 18:13:45 by dvan-kri      ########   odam.nl         */
+/*   Updated: 2022/05/23 13:04:37 by dvan-kri      ########   odam.nl         */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,17 +50,12 @@ int	ft_atoi(const char *str)
 
 t_bool	check_bool_with_mutex(pthread_mutex_t *mutex, t_bool *bool)
 {
+	t_bool	value;
+
 	pthread_mutex_lock(mutex);
-	if (*bool == TRUE)
-	{
-		pthread_mutex_unlock(mutex);
-		return (TRUE);
-	}
-	else
-	{
-		pthread_mutex_unlock(mutex);
-		return (FALSE);
-	}
+	value = *bool;
+	pthread_mutex_unlock(mutex);
+	return (value);
 }
 
 void	unlock_all_forks(t_data *data)
@@ -83,7 +78,7 @@ t_bool	print_act(t_philosopher *philo, char *msg)
 	pthread_mutex_lock(&philo->data->dead_mutex);
 	if (philo->data->philosopher_dead == FALSE)
 	{
-		printf("%d %d %s\n",
+		printf("%zu %d %s\n",
 			time_passed(philo->data->start_time), philo->id, msg);
 	}
 	else
