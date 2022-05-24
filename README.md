@@ -1,4 +1,4 @@
-# The dining philosoohers problem
+# The dining philosophers problem
 The 'dining philosophers problem' is a famous problem in computer science.
 This problem helps us to understand and work with several subjects that are related to concurrent programmming.
 
